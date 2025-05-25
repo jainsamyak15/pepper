@@ -71,6 +71,122 @@ Fan Tokens are at the core of Pepper's functionality:
 - resolveMarket: Propose the final outcome of a market (TEAM_ROLE only)
 - redeemWinnings: Claim winnings for successful bets
 
+## Technical Architecture
+
+### Frontend Architecture
+
+The Pepper frontend is built with a modern tech stack designed for optimal performance, user experience, and maintainability:
+
+1. **Framework**: Next.js 14 (React-based framework)
+   - Server-side rendering and static site generation capabilities
+   - App Router with file-based routing
+   - API routes for backend functionality
+
+2. **UI Components**:
+   - Custom UI components built with Radix UI primitives
+   - Framer Motion for smooth animations and transitions
+   - Tailwind CSS for utility-first styling
+   - Icons from Heroicons, React-Icons, and Radix UI Icons
+
+3. **State Management**:
+   - React hooks for local component state
+   - Context API for global state where needed
+   - Custom hooks for reusable state logic
+
+4. **Web3 Integration**:
+   - Ethers.js (v5) for blockchain interactions
+   - Web3 wallet integration (MetaMask compatibility)
+   - Custom hooks for contract interactions
+
+5. **Data Visualization**:
+   - Chart.js and React-ChartJS-2 for market data visualization
+   - Dynamic and responsive charts for market activity
+
+6. **Frontend Directory Structure**:
+   - `/src/app`: Next.js App Router pages and layouts
+     - `/admin`: Admin dashboard and controls
+     - `/teams/[teamId]`: Team-specific pages
+     - `/markets`: Market browsing and interaction
+     - `/create-market`: Market creation interface
+     - `/profile`: User profile and history
+   - `/src/components`: Reusable UI components
+   - `/src/hooks`: Custom React hooks
+   - `/src/lib`: Utility libraries
+   - `/src/utils`: Helper functions
+
+### Backend/Smart Contract Architecture
+
+1. **Smart Contracts**:
+   - `Pepper.sol`: Main contract handling markets, orders, and betting logic
+   - `FanToken.sol`: ERC20 token contract for team fan tokens
+   - Built with Solidity 0.8+
+   - OpenZeppelin library for access control and token standards
+
+2. **Contract Features**:
+   - Role-based access control for different user types
+   - P2P order matching system
+   - Team and market management
+   - Bet placement and settlement
+
+3. **Development Environment**:
+   - Hardhat for contract development, testing, and deployment
+   - Waffle and Chai for contract testing
+   - TypeScript for type safety
+
+4. **Contract Security**:
+   - OpenZeppelin contracts for standard implementations
+   - Role-based permissions
+   - Non-custodial design (protocol never holds user funds at risk)
+
+### Deployment Architecture
+
+1. **Frontend**:
+   - Vercel for Next.js deployment
+   - Continuous deployment from GitHub repository
+   - Automatic preview deployments for PR review
+
+2. **Smart Contracts**:
+   - Deployed to Chiliz Chain
+   - Contract verification on block explorer
+   - Multi-sig for contract ownership and administration
+
+3. **CI/CD Pipeline**:
+   - Automated testing before deployment
+   - Linting and type checking
+
+### Integration Points
+
+1. **Wallet Connection**:
+   - Support for Chiliz Chain compatible wallets
+   - Web3Modal for wallet selection
+
+2. **Contract Interaction**:
+   - Direct calls to smart contract functions
+   - Event listening for real-time updates
+   - Transaction status tracking
+
+3. **Fan Token Integration**:
+   - ERC20 token approval and transfers
+   - Token balance tracking
+   - Transaction fee estimation
+
+### Security Measures
+
+1. **Frontend Security**:
+   - Input validation and sanitization
+   - Protection against common web vulnerabilities
+   - Secure storage of sensitive information
+
+2. **Smart Contract Security**:
+   - Access control restrictions
+   - Checks-Effects-Interactions pattern
+   - Event emission for transparency
+
+3. **User Security**:
+   - Connection to trusted nodes
+   - Transaction confirmation steps
+   - Clear warning messages for irreversible actions
+
 ## Fund Flow
 
 1. Order Placement: When a user places an order, the required Fan Tokens are transferred to the contract.
