@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pepper Architecture Diagram Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .instructions {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        #diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pepper Architecture Diagram Generator</h1>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ol>
+                <li>The diagram will render below automatically</li>
+                <li>Click the "Download as PNG" button to save the image</li>
+                <li>Save the file as "architecture-diagram.png" in the docs folder</li>
+            </ol>
+        </div>
+        
+        <div id="diagram">
+            <pre class="mermaid">
+graph TD
+    %% Main layers
+    Browser["User's Browser"]
+    FrontEnd["Next.js Frontend"]
+    SmartContracts["Smart Contracts on Chiliz Chain"]
+    
+    %% Frontend modules
+    subgraph "Frontend Components"
+        direction LR
+        Pages["Pages"]
+        Components["Components"]
+        Hooks["Hooks"]
+        Utils["Utils"]
+        Lib["Lib"]
+    end
+    
+    subgraph "Pages"
+        direction LR
+        Admin["Admin Dashboard"]
+        TeamManager["Team Manager"]
+        Teams["Teams/[teamId]"]
+        Markets["Markets"]
+        CreateMarket["Create Market"]
+        Profile["User Profile"]
+    end
+    
+    subgraph "Smart Contracts"
+        direction LR
+        PepperContract["Pepper.sol"]
+        FanToken["FanToken.sol"]
+    end
+    
+    %% Connections
+    Browser --> FrontEnd
+    FrontEnd --> SmartContracts
+    
+    %% Frontend internal connections
+    FrontEnd --> Pages
+    FrontEnd --> Components
+    FrontEnd --> Hooks
+    FrontEnd --> Utils
+    FrontEnd --> Lib
+    
+    %% Smart Contract internal connections
+    PepperContract -- "Interacts with" --> FanToken
+    
+    %% Core functionality
+    subgraph "Core Functionality"
+        direction LR
+        TeamManagement["Team Management"]
+        MarketCreation["Market Creation"]
+        OrderPlacement["Order Placement"]
+        OrderMatching["Order Matching"]
+        MarketResolution["Market Resolution"]
+        WinningsRedemption["Winnings Redemption"]
+    end
+    
+    PepperContract --> TeamManagement
+    PepperContract --> MarketCreation
+    PepperContract --> OrderPlacement
+    PepperContract --> OrderMatching
+    PepperContract --> MarketResolution
+    PepperContract --> WinningsRedemption
+    
+    %% User roles
+    subgraph "User Roles"
+        direction LR
+        AdminRole["Admin Role"]
+        TeamManagerRole["Team Manager Role"]
+        UserRole["User/Fan Role"]
+    end
+    
+    %% Integrations
+    subgraph "External Integrations"
+        direction LR
+        Wallets["Web3 Wallets"]
+        BlockExplorer["Block Explorer"]
+    end
+    
+    Browser --> Wallets
+    Wallets --> SmartContracts
+    SmartContracts --- BlockExplorer
+    
+    style FrontEnd fill:#b3e0ff,stroke:#0066cc
+    style SmartContracts fill:#ffcccc,stroke:#990000
+    style Browser fill:#d9d9d9,stroke:#333333
+    style PepperContract fill:#ff9999,stroke:#cc0000
+    style FanToken fill:#ff9999,stroke:#cc0000
+    style Wallets fill:#d9f2d9,stroke:#006600
+    style BlockExplorer fill:#d9f2d9,stroke:#006600
+            </pre>
+        </div>
+        
+        <button id="download">Download as PNG</button>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            securityLevel: 'loose'
+        });
+        
+        document.getElementById('download').addEventListener('click', function() {
+            const svgElement = document.querySelector('.mermaid svg');
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const img = new Image();
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                
+                const pngFile = canvas.toDataURL('image/png');
+                const downloadLink = document.createElement('a');
+                downloadLink.download = 'architecture-diagram.png';
+                downloadLink.href = pngFile;
+                downloadLink.click();
+            };
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        });
+    </script>
+</body>
+</html> 
