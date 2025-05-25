@@ -1,54 +1,119 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.pt-header {
-  padding-top: 5rem; /* Adjust this value based on your header height */
+ 
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 346.8 77.2% 49.8%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 346.8 77.2% 49.8%;
+    --radius: 0.5rem;
+  }
 }
 
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 17, 24, 39;
-  --background-end-rgb: 31, 41, 55;
+.pt-header {
+  padding-top: 5rem;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-orbitron);
-}
-
-body, p, span, div {
-  font-family: var(--font-roboto-condensed);
-}
-
-.neon-text {
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
+  @apply bg-background text-foreground;
 }
 
 .glass-effect {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  @apply bg-white/10 backdrop-blur-md border border-white/20;
 }
 
-.grid-bg {
-  background-image: 
-    linear-gradient(rgba(50, 50, 50, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(50, 50, 50, 0.1) 1px, transparent 1px);
+.neon-border {
+  @apply border-2 border-transparent;
+  background: linear-gradient(45deg, #ff1b6b, #45caff) border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.animate-gradient {
+  @apply bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent;
+  animation: gradient 8s linear infinite;
+  background-size: 200% auto;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.hover-card-gradient {
+  background: linear-gradient(
+    45deg,
+    rgba(255, 27, 107, 0.1) 0%,
+    rgba(69, 202, 255, 0.1) 100%
+  );
+}
+
+.card-shine {
+  @apply absolute inset-0 z-10 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity duration-500;
+  background-size: 200% 100%;
+  background-position: 100% 0;
+}
+
+.hover-card:hover .card-shine {
+  @apply opacity-100;
+  animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: -100% 0;
+  }
+}
+
+.grid-pattern {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-.cyberpunk-border {
-  border: 2px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, #ff00de, #00ff00, #00ffff);
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 animate-text-gradient;
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(255, 27, 107, 0.5);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(69, 202, 255, 0.5);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+}
+
+.shimmer {
+  @apply relative overflow-hidden before:absolute before:inset-0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
