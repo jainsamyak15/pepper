@@ -77,10 +77,6 @@ Fan Tokens are at the core of Pepper's functionality:
 
 *Technical architecture overview of the Pepper platform*
 
-**Note:** You can replace this diagram with your own architecture diagram by:
-1. Saving your diagram as `docs/architecture-diagram.png`
-2. Or using the HTML generator in `docs/generate-diagram.html` to create a diagram based on the provided Mermaid definition
-
 ### Frontend Architecture
 
 The Pepper frontend is built with a modern tech stack designed for optimal performance, user experience, and maintainability:
