@@ -1,9 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUsers, FaChartLine, FaCoins, FaShieldAlt, FaPlusCircle, FaCog, FaTrophy, FaUserPlus } from 'react-icons/fa';
 import { ethers } from 'ethers';
+
+// Add ethereum to the Window interface
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
 
 const contractAddress = '0x239EDd859C51b8b7ac88F55Eed96F380F0bD816d';
 const contractABI = [
